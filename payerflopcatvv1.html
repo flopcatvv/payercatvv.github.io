@@ -1,3 +1,32 @@
+<?php
+// Dominios permitidos
+$allowed_urls = array(
+    'https://futbollibre.futbol/',
+    'https://futbol-libre.ar/',
+    'https://futbollibrehd.cl/',
+    'https://librefutbol.futbol/'
+);
+
+// Verificar si la solicitud proviene de una de las URL permitidas
+$referer = $_SERVER['HTTP_REFERER'];
+$referer_matched = false;
+foreach ($allowed_urls as $allowed_url) {
+    if (strpos($referer, $allowed_url) === 0) {
+        $referer_matched = true;
+        break;
+    }
+}
+
+// Si la solicitud no proviene de ninguna de las URL permitidas, devolver un código de respuesta HTTP 403 - Prohibido
+if (!$referer_matched) {
+    http_response_code(403);
+    echo 'Acceso prohibido';
+    exit;
+}
+
+// Si la solicitud proviene de una de las URL permitidas, continuar con el procesamiento del archivo...
+?>
+
 <!DOCTYPE html>
 <html lang="es">
  <style type="text/css">
